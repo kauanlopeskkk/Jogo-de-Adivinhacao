@@ -1,16 +1,16 @@
 var numeroSecreto=0;
 var tentativas = 0;
-
+var maxTentativas=10;
 function 
 atualizar(){
-numeroEncontrado = parseInt(Math.random()* 100) +1 ;
+numeroSecreto = parseInt(Math.random() * 100) +1 ;
 console.log (numeroSecreto)
 }
 function verificarNumero(){
 var palpite = document.getElementById("palpite").value;    
 var mensagem = document.getElementById ("mensagem");
 
-if ( isNaN (palpite) || palpite > 100 || palpite < 1) {
+if ( isNaN(palpite) || palpite > 100 || palpite < 1) {
 
 mensagem.textContent = "👾Numero Invalida!!";
 return;
@@ -24,17 +24,32 @@ tentativas ++;
 
 }
 else if (palpite < numeroSecreto) {
+    
+tentativas ++
+ mensagem.textContent = "O numero secreto e Maior!"
 
-tentativas ++;
- mensagem.textContent = "O numero secreto e Maior!";
- console.log ("O numero secreto e Maior!");
+
 }
 else{
-    mensagem.textContent =  "✅Voce Acertou!! Com " +tentativas+ "erros!";
+    mensagem.textContent =  "✅Voce Acertou!! Com " +tentativas+   "tentativas";
+    desativarJogo();
+    return;
+}
+var tentativasRestantes = maxTentativas - tentativas;
+document.getElementById("tentativas").textContent = "Tentativas restantes:" + tentativasRestantes;
+
+
+if (tentativasRestantes <= 0){
+mensagem.textContent = "😢 Voce perdeu! O numero secreto era " + numeroSecreto + ".";
+desativarJogo()
+
+
+}
+
+}
+function desativarJogo(){ 
 document.getElementById ("btnChutar").disabled =true;
 document.getElementById("palpite").disabled = true;
-}
-document.getElementById("tentativas").textContent = "tentativas:" + tentativas;
 }
 atualizar();
 
